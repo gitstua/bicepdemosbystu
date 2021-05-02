@@ -41,7 +41,10 @@ param automaticFailover bool = true
 param databaseName string = uniqueString(resourceGroup().name)
 
 @description('The name for the Gremlin graph')
-param graphName string = 'graphname'
+param graphName string = 'graphName'
+
+@description('The partition key for the database')
+param partionKey string='/myPartitionKey'
 
 var accountName_var = toLower(accountName)
 var consistencyPolicy = {
@@ -122,7 +125,7 @@ resource accountName_databaseName_graphName 'Microsoft.DocumentDb/databaseAccoun
       }
       partitionKey: {
         paths: [
-          '/myPartitionKey'
+          partionKey
         ]
         kind: 'Hash'
       }
