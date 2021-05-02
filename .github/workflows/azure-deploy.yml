@@ -36,7 +36,7 @@ jobs:
           echo test, and deploy your project.
 
       # demo of setting up a tmate session to debug
-      - uses: actions/checkout@v2
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-        timeout-minutes: 15
+      #- uses: actions/checkout@v2
+      #- name: Setup tmate session
+      #  uses: mxschmitt/action-tmate@v3
+      #  timeout-minutes: 15
