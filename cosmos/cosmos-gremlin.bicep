@@ -1,14 +1,14 @@
 @description('Cosmos DB account name')
-param accountName string = 'gremlin-${uniqueString(resourceGroup().id)}'
+param accountName string = 'grem-${uniqueString(resourceGroup().id)}'
 
 @description('Location for the Cosmos DB account.')
 param location string = resourceGroup().location
 
 @description('The primary replica region for the Cosmos DB account.')
-param primaryRegion string = 'australiacentral'
+param primaryRegion string = 'australiaeast'
 
 @description('The secondary replica region for the Cosmos DB account.')
-param secondaryRegion string = 'australiacentral2'
+param secondaryRegion string = 'australiasoutheast'
 
 @allowed([
   'Eventual'
@@ -72,11 +72,11 @@ var locations = [
     failoverPriority: 0
     isZoneRedundant: false
   }
-  // {
-  //   locationName: secondaryRegion
-  //   failoverPriority: 1
-  //   isZoneRedundant: false
-  // }
+  {
+    locationName: secondaryRegion
+    failoverPriority: 1
+    isZoneRedundant: false
+  }
 ]
 
 resource accountName_resource 'Microsoft.DocumentDB/databaseAccounts@2021-01-15' = {
