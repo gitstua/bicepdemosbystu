@@ -1,5 +1,5 @@
 @description('Cosmos DB account name')
-param accountName string = 'grem-${uniqueString(resourceGroup().id)}'
+param accountName string = 'grem3-${uniqueString(resourceGroup().id)}'
 
 @description('Location for the Cosmos DB account.')
 param location string = resourceGroup().location
@@ -151,7 +151,7 @@ resource privateEndpoint 'Microsoft.Network/privateEndpoints@2020-06-01' = {
       {
         name: 'MyConnection'
         properties: {
-          privateLinkServiceId: accountName_databaseName.id
+          privateLinkServiceId: accountName_resource.id
           groupIds: [
             'Sql'
           ]
