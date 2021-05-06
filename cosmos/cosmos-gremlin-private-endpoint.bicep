@@ -153,7 +153,7 @@ resource privateEndpoint 'Microsoft.Network/privateEndpoints@2020-06-01' = {
         properties: {
           privateLinkServiceId: accountName_resource.id
           groupIds: [
-            'Sql'
+            'Gremlin'
           ]
         }
       }
