@@ -1,11 +1,16 @@
+@maxLength(5)
+@minLength(1)
+@description('Environment')
+param environment string = 'dev2'
+
 @description('Cosmos DB account name')
-param accountName string = 'grem3-${uniqueString(resourceGroup().id)}'
+param accountName string = '${environment}${uniqueString(resourceGroup().id)}'
 
 @description('Location for the Cosmos DB account.')
 param location string = resourceGroup().location
 
 @description('The primary replica region for the Cosmos DB account.')
-param primaryRegion string = 'australiaeast'
+param primaryRegion string = resourceGroup().location
 
 @description('The secondary replica region for the Cosmos DB account.')
 param secondaryRegion string = 'australiasoutheast'
@@ -46,9 +51,11 @@ param graphName string = 'graphName'
 @description('The partition key for the database')
 param partionKey string='/myPartitionKey'
 
-param privateEndpointName string
+@description('Name of Private Enpoint resource')
+param privateEndpointName string = 'pe1'
 
-param virtualNetworkName string
+@description('Name of VNET resource')
+param virtualNetworkName string = 'vNet1'
 
 var accountName_var = toLower(accountName)
 var consistencyPolicy = {
