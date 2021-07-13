@@ -1,0 +1,141 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "aseName": {
+            "type": "string"
+        },
+        "location": {
+            "type": "string"
+        },
+        "subscriptionId": {
+            "type": "string"
+        },
+        "dedicatedHostCount": {
+            "type": "string"
+        },
+        "virtualNetworkName": {
+            "type": "string"
+        },
+        "virtualNetworkResourceGroupName": {
+            "type": "string"
+        },
+        "virtualNetworkAddress": {
+            "type": "string"
+        },
+        "inboundSubnetName": {
+            "type": "string"
+        },
+        "inboundSubnetId": {
+            "type": "string"
+        },
+        "inboundSubnetAddress": {
+            "type": "string"
+        },
+        "outboundSubnetName": {
+            "type": "string"
+        },
+        "outboundSubnetId": {
+            "type": "string"
+        },
+        "outboundSubnetAddress": {
+            "type": "string"
+        },
+        "delegationName": {
+            "type": "string"
+        },
+        "privateEndpointConnectionName": {
+            "type": "string"
+        },
+        "privateLinkConnectionName": {
+            "type": "string"
+        },
+        "hostingEnvironmentId": {
+            "type": "string"
+        },
+        "ilbMode": {
+            "type": "int"
+        }
+    },
+    "resources": [
+        {
+            "apiVersion": "2018-04-01",
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[parameters('virtualNetworkName')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[parameters('virtualNetworkAddress')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "[parameters('inboundSubnetName')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('inboundSubnetAddress')]",
+                            "privateEndpointNetworkPolicies": "Disabled"
+                        }
+                    },
+                    {
+                        "name": "[parameters('outboundSubnetName')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('outboundSubnetAddress')]",
+                            "delegations": [
+                                {
+                                    "name": "[parameters('delegationName')]",
+                                    "properties": {
+                                        "serviceName": "Microsoft.Web/hostingEnvironments"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "2019-08-01",
+            "type": "Microsoft.Web/hostingEnvironments",
+            "name": "[parameters('aseName')]",
+            "kind": "ASEV3",
+            "location": "[parameters('location')]",
+            "properties": {
+                "dedicatedHostCount": "[parameters('dedicatedHostCount')]",
+                "InternalLoadBalancingMode": "[parameters('ilbMode')]",
+                "virtualNetwork": {
+                    "id": "[parameters('outboundSubnetId')]"
+                }
+            },
+            "tags": null,
+            "dependsOn": [
+                "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]"
+            ]
+        },
+        {
+            "apiVersion": "2019-04-01",
+            "type": "Microsoft.Network/privateEndpoints",
+            "name": "[parameters('privateEndpointConnectionName')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "subnet": {
+                    "id": "[parameters('inboundSubnetId')]"
+                },
+                "privateLinkServiceConnections": [
+                    {
+                        "name": "[parameters('privateLinkConnectionName')]",
+                        "properties": {
+                            "privateLinkServiceId": "[parameters('hostingEnvironmentId')]",
+                            "groupIds": [
+                                "hostingEnvironments"
+                            ]
+                        }
+                    }
+                ]
+            },
+            "dependsOn": [
+                "[concat('Microsoft.Web/hostingEnvironments/', parameters('aseName'))]"
+            ]
+        }
+    ]
+}

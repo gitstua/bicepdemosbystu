@@ -1,0 +1,51 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "aseName": {
+            "value": "asev3stu1"
+        },
+        "location": {
+            "value": "australiaeast"
+        },
+        "dedicatedHostCount": {
+            "value": "0"
+        },
+        "zoneRedundant": {
+            "value": false
+        },
+        "virtualNetworkName": {
+            "value": "asev3stu1vnet"
+        },
+        "virtualNetworkResourceGroupName": {
+            "value": "asev3stu1"
+        },
+        "virtualNetworkAddress": {
+            "value": "192.168.250.0/23"
+        },
+        "subnetName": {
+            "value": "subnet1"
+        },
+        "subnetId": {
+            "value": "/subscriptions/e7752f09-24a1-4b14-9931-6a56d4f6109d/resourceGroups/asev3stu1/providers/Microsoft.Network/virtualNetworks/asev3stu1vnet/subnets/subnet1"
+        },
+        "subnetAddress": {
+            "value": "192.168.250.0/24"
+        },
+        "delegationName": {
+            "value": "asev3stu1-delegation"
+        },
+        "hostingEnvironmentId": {
+            "value": "/subscriptions/e7752f09-24a1-4b14-9931-6a56d4f6109d/resourcegroups/asev3stu1/providers/Microsoft.Web/HostingEnvironments/asev3stu1"
+        },
+        "ilbMode": {
+            "value": 3
+        },
+        "virtualNetworkId": {
+            "value": "/subscriptions/e7752f09-24a1-4b14-9931-6a56d4f6109d/resourceGroups/asev3stu1/providers/Microsoft.Network/virtualNetworks/asev3stu1vnet"
+        },
+        "privateZoneName": {
+            "value": "asev3stu1.appserviceenvironment.net"
+        }
+    }
+}

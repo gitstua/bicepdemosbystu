@@ -1,0 +1,60 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "aseName": {
+            "value": "stuASEv3"
+        },
+        "location": {
+            "value": "australiaeast"
+        },
+        "subscriptionId": {
+            "value": "e7752f09-24a1-4b14-9931-6a56d4f6109d"
+        },
+        "dedicatedHostCount": {
+            "value": "0"
+        },
+        "virtualNetworkName": {
+            "value": "stuASEv3vmet"
+        },
+        "virtualNetworkResourceGroupName": {
+            "value": "stuASEv3"
+        },
+        "virtualNetworkAddress": {
+            "value": "192.168.250.0/23"
+        },
+        "inboundSubnetName": {
+            "value": "inboundsubnet"
+        },
+        "inboundSubnetId": {
+            "value": "/subscriptions/e7752f09-24a1-4b14-9931-6a56d4f6109d/resourceGroups/stuASEv3/providers/Microsoft.Network/virtualNetworks/stuASEv3vmet/subnets/inboundsubnet"
+        },
+        "inboundSubnetAddress": {
+            "value": "192.168.250.0/24"
+        },
+        "outboundSubnetName": {
+            "value": "outboundsubnet"
+        },
+        "outboundSubnetId": {
+            "value": "/subscriptions/e7752f09-24a1-4b14-9931-6a56d4f6109d/resourceGroups/stuASEv3/providers/Microsoft.Network/virtualNetworks/stuASEv3vmet/subnets/outboundsubnet"
+        },
+        "outboundSubnetAddress": {
+            "value": "192.168.251.0/24"
+        },
+        "delegationName": {
+            "value": "stuASEv3-delegation"
+        },
+        "privateEndpointConnectionName": {
+            "value": "stuASEv3-privateEndpoint"
+        },
+        "privateLinkConnectionName": {
+            "value": "stuASEv3-privateLink"
+        },
+        "hostingEnvironmentId": {
+            "value": "/subscriptions/e7752f09-24a1-4b14-9931-6a56d4f6109d/resourcegroups/stuASEv3/providers/Microsoft.Web/HostingEnvironments/stuASEv3"
+        },
+        "ilbMode": {
+            "value": 3
+        }
+    }
+}

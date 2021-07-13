@@ -1,0 +1,47 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "subscriptionId": {
+            "value": "e7752f09-24a1-4b14-9931-6a56d4f6109d"
+        },
+        "name": {
+            "value": "stuASEv3web1"
+        },
+        "location": {
+            "value": "australiaeast"
+        },
+        "hostingPlanName": {
+            "value": "ASP-stuASEv3-958c"
+        },
+        "serverFarmResourceGroup": {
+            "value": "stuASEv3"
+        },
+        "alwaysOn": {
+            "value": true
+        },
+        "hostingEnvironmentProfile": {
+            "value": {
+                "id": "/subscriptions/e7752f09-24a1-4b14-9931-6a56d4f6109d/resourceGroups/stuASEv3/providers/Microsoft.Web/hostingEnvironments/stuASEv3"
+            }
+        },
+        "sku": {
+            "value": "IsolatedV2"
+        },
+        "skuCode": {
+            "value": "I1V2"
+        },
+        "workerSize": {
+            "value": "6"
+        },
+        "workerSizeId": {
+            "value": "6"
+        },
+        "numberOfWorkers": {
+            "value": "1"
+        },
+        "linuxFxVersion": {
+            "value": "DOTNETCORE|5.0"
+        }
+    }
+}
