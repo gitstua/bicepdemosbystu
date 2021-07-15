@@ -1,5 +1,21 @@
+/*  LICENCE SEE: https://github.com/gitstua/bicepdemosbystu/blob/main/LICENSE
+    This template can be run by following these steps:
+    1. Install Azure CLI or connect to Cloud Shell 
+    2. Verify connected to the correct account 
+    3. Create a resource group:
+      az group create -l australiaeast -n myResourceGroup 
+    4. Create a deployment
+      az deployment group create -g myResourceGroup -f .\filename.bicep 
+
+    NOTE: You can specify parameters if you choose. If not specified params are defaulted based on resourcegroup name 
+          if specified resources are named based on baseName e.g. 
+          az deployment group create -g MyResourceGroup --template-file filename.bicep --parameters baseName=dev34
+*/
+@description('The name which other resource names are built from e.g. contosodev')
+param baseName string = resourceGroup().name
 @description('the name of the ase e.g. myexample - this is used to name the other resources. must be in the resource group this template is deployed to.')
-param aseName string = 'ase-${resourceGroup().name}'
+param aseName string = 'ase-${baseName}'
+@description('the resource group where the aseResource is located')
 param aseResourceGroupName string = resourceGroup().name
 param location string = resourceGroup().location
 param AppInsightsInstrumentationKey string = ''
@@ -9,12 +25,12 @@ param AppInsightsConnectionString string = ''
 @maxLength(24)
 @minLength(3)
 param functionAppStorageName string = uniqueString(resourceGroup().id)
-param functionAppName string = 'FnApp1-${aseName}'
+param functionAppName string = 'FnApp1-${baseName}'
 
 
 //obtain a reference to the resource we created earlier
 //this is required to be in a seperate template as the ASEv3 must be fully created and available (~2 hours of deployment) before this template is submitted
-resource aseName_resource 'Microsoft.Web/hostingEnvironments@2020-12-01' existing = {
+resource baseName_resource 'Microsoft.Web/hostingEnvironments@2020-12-01' existing = {
   name: aseName
   scope: resourceGroup(aseResourceGroupName)
 }
@@ -54,7 +70,7 @@ resource functionApp 'Microsoft.Web/sites@2021-01-01' = {
     }
     serverFarmId: webHostingFarm.id
     hostingEnvironmentProfile: {
-      id: aseName_resource.id
+      id: baseName_resource.id
     }
     clientAffinityEnabled: false
   }
@@ -76,11 +92,11 @@ resource functionAppStorage 'Microsoft.Storage/storageAccounts@2021-04-01' = {
 
 resource webHostingFarm 'Microsoft.Web/serverfarms@2020-06-01' ={
   kind: 'linux'
-  name: '${aseName}-ASP2'
+  name: '${baseName}-ASP2'
   location: location
   properties:{
     hostingEnvironmentProfile: {
-      id: aseName_resource.id
+      id: baseName_resource.id
     }
     // note: this must be set to true to deploy linux
     reserved: true
@@ -93,11 +109,6 @@ resource webHostingFarm 'Microsoft.Web/serverfarms@2020-06-01' ={
       capacity: 1
   }
   dependsOn:[
-    aseName_resource
+    baseName_resource
   ]
 }
-
-// output subnetAseId string = subnetAseId
-// output subnet2Id string = subnet2Id
-// output virtualNetworkId string = virtualNetworkName_resource.id
-// output myresource object = virtualNetworkName_resource
